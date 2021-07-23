@@ -46,13 +46,7 @@ class ChatFunctionTest extends TestCase
         
         // 作成ルーム表示
         $response->dump();
-        $response->assertStatus(200);
-        
-        // 作成ルームを取得
-        $response = $this->post('/rooms',['role' => 'user']);
-        // 作成ルーム表示
-        $response->dump();
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_CREATED);
     }
 
     // ユーザーがメッセージを送信
