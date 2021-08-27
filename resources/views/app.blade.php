@@ -8,7 +8,7 @@
     <meta name="role" content="{{ session()->get('role') ?? '' }}">
     <meta name="api-token" content="{{ session()->get('api_token') ?? '' }}">
 
-    <title>{{ config('app.name', 'Hawayu') }}</title>
+    <title>{{ config('app.name', 'ハワユ') }}</title>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
 
