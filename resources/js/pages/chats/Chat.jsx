@@ -279,7 +279,7 @@ function Chat({ope_id}) {
     //         'Accept':'application/json'
     //     }
     // })
-       await axios.post (`http://localhost/api/join-room?room_id=${room_id}`,{api_token},{csrf_token})
+       await axios.post (`/api/join-room?room_id=${room_id}`,{api_token},{csrf_token})
     .then((response)=>{
         console.log("joinres",response)
         // location.href = "/chatpage?roomid="+room_id;
@@ -294,7 +294,7 @@ function Chat({ope_id}) {
         //保健師が対応中のルーム一覧を取得
         const onClickWip = async()=>{
         const operator_id = ope_id
-            await axios.get(`http://localhost/api/wip?api_token=${api_token}`,{csrf_token})
+            await axios.get(`/api/wip?api_token=${api_token}`,{csrf_token})
         .then((response)=>{
             console.log("wipData",response.data)
             setWipRoom(response.data)
@@ -307,7 +307,7 @@ function Chat({ope_id}) {
         const onClickDoneRoom = async() =>{
             const operator_id = room_info.operator_id
             const room_id = room_info.id
-            await axios.post(`http://localhost/api/close-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
+            await axios.post(`/api/close-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
         .then((response)=>{
             console.log("closeroom",response.data)
          
