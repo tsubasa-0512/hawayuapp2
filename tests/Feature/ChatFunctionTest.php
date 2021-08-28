@@ -46,7 +46,7 @@ class ChatFunctionTest extends TestCase
         
         // 作成ルーム表示
         $response->dump();
-        $response->assertStatus(Response::HTTP_CREATED);
+        $response->assertStatus(200);
     }
 
     // ユーザーがメッセージを送信
