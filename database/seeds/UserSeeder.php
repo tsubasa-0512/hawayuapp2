@@ -16,14 +16,16 @@ class UserSeeder extends Seeder
         
         DB::table('users')->insert([
             [
+                'id' => 1,
                 'name' => 'test',
-                'nickname' => 'テスト1',
+                'nickname' => 'テスト',
                 'email' => 'test@gmail.com',
                 'password' => Hash::make('password'),
                 'membership_id' => '2',
                 'company_id' => '1',
             ],
             [
+                'id' => 2,
                 'name' => 'test2',
                 'nickname' => 'テスト２',
                 'email' => 'test2@gmail.com',
