@@ -320,7 +320,7 @@ function Chat({ope_id}) {
         const onClickUndone = async() =>{
             const operator_id = room_info.operator_id
             const room_id = room_info.id
-            await axios.post(`http://localhost/api/rollback-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
+            await axios.post(`/api/rollback-room?room_id=${room_id}`,{api_token},{csrf_token},{operator_id})
             .then((response)=>{
                 console.log("undoneroom",response.data)
                 // setDoneRoom(response.data)
@@ -333,7 +333,7 @@ function Chat({ope_id}) {
 
             //保健師のページに対応完了ルームを読み込む
             const onClickDone =async () =>{
-                await axios.get(`http://localhost/api/done?api_token=${api_token}`,{csrf_token})
+                await axios.get(`/api/done?api_token=${api_token}`,{csrf_token})
                 .then((response)=>{
                     console.log("doneData",response.data)
                     // const newDoneRoom = [...doneRoom,response.data]
