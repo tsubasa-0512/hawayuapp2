@@ -9,7 +9,7 @@
     <meta name="api-token" content="{{ session()->get('api_token') ?? '' }}">
     <meta name="role" content="{{ session()->get('role') ?? '' }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Hawayu') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
