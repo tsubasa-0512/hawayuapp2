@@ -85,7 +85,7 @@ const Hawayu = () =>{
     //更新部分：送信する関数（回答内容とハワユidを付与）
     // エンドポイントはdeploy時に本番URLに変える必要あり
     const onClickSubmit = async() =>{
-       await axios.post('http://localhost/api/answer-inquiry',{
+       await axios.post('/api/answer-inquiry',{
         answer: answerData,
         inquiry_id: inquiry_Id,
         api_token:api_token
