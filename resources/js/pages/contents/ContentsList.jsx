@@ -183,7 +183,7 @@ import { BiBeenHere } from "react-icons/bi";
 
 
             </Grid>
-            {/* 削除 */}
+            
 {/* 
            <Center mt={'2rem'}>
              <Sleep />
