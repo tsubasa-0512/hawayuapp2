@@ -28,7 +28,7 @@ const Hawayu = () =>{
     const  [question, setQuestion] = useState([]);
     //回答内容
     const  [answerData, setAnswerData] = useState([]);
-    //回答結果の内容（スコアなど）
+    //回答結果の内容（スコアなどです）
     const  [scoreData, setScoreData] = useState([]);
     //モーダル用
     const { isOpen, onOpen, onClose } = useDisclosure()
