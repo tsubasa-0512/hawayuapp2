@@ -17,6 +17,9 @@ jobs:
       DB_USERNAME: default
       DB_PASSWORD: secret
     steps:
+      - run:
+          name: add git
+          command: apk -U add git
       - checkout
       - run: sudo composer self-update --1
       - restore_cache:
