@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth:operator_api']], function () {
     Route::post('/rollback-room', 'RoomsController@rollback');
     // 対応済ルーム情報取得
     Route::get('/done', 'RoomsController@done');
+
+    // ユーザー情報取得
+    Route::get('/get-user-info', 'User\UserController@getUserInfo');
 });
 
 //hawayu関連
@@ -72,4 +75,3 @@ Route::group(['middleware' => ['api']], function () {
     // ユーザーのアンケート用紙作成
     Route::get('/show-question','InquiriesController@showQuestionList');
 });
-
