@@ -14,6 +14,8 @@ import { AddIcon ,ArrowRightIcon,ArrowBackIcon,ChatIcon} from '@chakra-ui/icons'
 import { UserContext } from '../user/UserProvider';
 import { PrimaryButton } from '../../parts/PrimaryButton';
 import team from '../../images/team.png';
+import UserInfoByOpe from '../user/UserInfoByOpe';
+import HawayuInfoByOpe from '../user/HawayuInfoByOpe';
 
 function Chat({ope_id}) {
     //チャットメッセージ
@@ -28,6 +30,11 @@ function Chat({ope_id}) {
      const [wipRoom,setWipRoom] = useState([]);
     //対応完了ルーム一覧
     const[doneRoom,setDoneRoom] = useState([]);
+    //ユーザー情報
+    const[userInfo,setUserInfo] = useState([]);
+
+    const user_id = room_info.user_id
+ 
 
     useEffect(() => {
         
@@ -108,6 +115,33 @@ function Chat({ope_id}) {
         }); 
     }
 
+    const onClickToLoadUserInfo = async() =>{
+        await axios
+        .get(`/api/get-user-info?api_token=${api_token}&id=${user_id}`)
+        .then((response)=>{
+            console.log("userinfo",response.data)
+            console.log("userinfoURL",`/api/get-user-info?api_token=${api_token}&id=${user_id}`)
+            console.log(user_id)
+            setUserInfo(response.data)
+            setStatus(0)
+        }).catch(error => {
+            console.log('Error',error.response);
+                });
+    }
+    const onClickToLoadHawayuInfo = async() =>{
+        await axios
+        .get(`/api/get-user-info?api_token=${api_token}&id=${user_id}`)
+        .then((response)=>{
+            console.log("userinfo",response.data)
+            console.log("userinfoURL",`/api/get-user-info?api_token=${api_token}&id=${user_id}`)
+            console.log(user_id)
+            setUserInfo(response.data)
+            setStatusHawayu(1)
+        }).catch(error => {
+            console.log('Error',error.response);
+                });
+    }
+
 //新しくチャットルームを作る
     const onClickOpenChatRoom = async () => {
         await axios
@@ -119,17 +153,6 @@ function Chat({ope_id}) {
         .then((res)=>{
            
             loadRooms();
-            // console.log("roomid",room_id)
-            // setRoom_id(res.data.id)
-            // location.href = "/chatpage?roomid="+res.data.id;
-
-            // console.log("dataid",res.data.id)
-            // location.href="/chatpage"
-            // console.log("roomid",res.data)
-                // console.log("チャットルームを作りました")
-                // e.preventDefault();
-                // history.push("/chatpage");
-                // console.log(dataId)
                 
                 })     
         
@@ -140,6 +163,7 @@ function Chat({ope_id}) {
     
     //表示されたroomをクリックすると該当roomの全メッセージを表示（onClick）
     const onClickLoadChats = async (el_id)=>{
+
         const clicked_room_id = el_id.target.id;
         const role = document.querySelector('meta[name="role"]').getAttribute("content");
         console.log(el_id.target.id)
@@ -165,17 +189,14 @@ function Chat({ope_id}) {
             setRoom_info(arr[0]);
             setMsg_list(arr[1]);
             console.log(arr[0])
-            // const newRoomInfoList = [...room_info, arr[0]]
-            // setRoom_info(newRoomInfoList)
   
             setRoom_id(clicked_room_id);
             console.log('url',`/load-msg-onseen?room_id=${clicked_room_id}&role=${role}`)
-          
-            // console.log("room_id",newRoomId)
         })
         .catch((error) => {
             console.error(error);
         }); 
+
     }
     
     //チャット入力
@@ -188,32 +209,16 @@ function Chat({ope_id}) {
             console.log(e,"event");
             setInputChat(e.target.value);
         }
+    //userinfo
+    const [clickstatus, setStatus] = useState("");
+    //hawayuinfo
+    const [clickstatushawayu, setStatusHawayu] = useState("");
     
     // チャット送信（onClick）
     const onClickSendChats= (e)=>{
         // const msg = document.getElementById('chat_tbox').value;
         const role = document.querySelector('meta[name="role"]').getAttribute("content");
         const tok = document.querySelector('meta[name="csrf-token"]').content;
-        // const { room_id } = useParams()
-        //パラメータの取得
-        // let urlParamStr = window.location.search
-        // let params = {}
-
-        // if (urlParamStr) {
-        //     //?を除去
-        //     urlParamStr = urlParamStr.substring(1)
-        //     //urlパラメータをオブジェクトにまとめる
-        //     urlParamStr.split('&').forEach( param => {
-        //       const temp = param.split('=')
-        //       //pramsオブジェクトにパラメータを追加
-        //       params = {
-        //         ...params,
-        //         [temp[0]]: temp[1]
-        //       }
-        //     })
-        //   }
-        //   console.log("paramsのroomid",params.roomid)
-        //   let room_id = params.roomid;
         
         //roleによってログイン中のidを返す
         let senderId =""
@@ -461,7 +466,7 @@ function Chat({ope_id}) {
                                         //  key={number.id} 
                                     onClick={onClickLoadChats} 
                                     className="list-group-item list-group-item-action" >
-                                          まだメッセージはありません
+                                          こちらに最初のメッセージを入力してください
                                          </li>)
                                                
                                         :
@@ -648,6 +653,37 @@ function Chat({ope_id}) {
                             </div>
                             
                             }
+
+                        {/* ユーザー情報（Opeの場合のみ表示） */}
+                        {role==="operator"&&
+
+                        <div>
+                            <Button onClick={onClickToLoadUserInfo}
+                            >ユーザー情報</Button>
+                            
+                            {clickstatus === 0 &&
+                            <UserInfoByOpe 
+                            nickname={userInfo.user.nickname} 
+                            company={userInfo.user.company.company} 
+                            gender={userInfo.user.gender}
+                            />}
+
+                
+                            
+                            <Button onClick={onClickToLoadHawayuInfo}
+                              >ハワユ最新回答</Button>
+
+                        {clickstatushawayu === 1 && 
+                            <HawayuInfoByOpe
+                            userHawayuInfo={userInfo} 
+                            // created_at = {userInfo.hawayu.created_at}
+                            // hawayuInfo={userInfo.hawayu.results}
+                            />
+                          
+                        }
+                        </div>        
+                        }
+
                         </div>
                     </div>
                     )}

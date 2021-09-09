@@ -10,7 +10,7 @@ use App\Models\Inquiry;
 class UserController extends Controller
 {
     public function getUserInfo(Request $request) {
-        $user_id =  $request->user()->id;  
+        $user_id =  $request->id;  
         $user = User::with('company')->where('id', $user_id)->first(); 
         $user_inquiry = Inquiry::with('results.answer')
                         ->where('user_id', $user_id)
